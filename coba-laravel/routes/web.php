@@ -14,5 +14,13 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return 'Ipan Sopian';
+    return view ('Home');
+});
+
+Route::get('/about', function () {
+    return view ('about');
+});
+
+Route::get('/blog', function () {
+    return view ('posts');
 });
