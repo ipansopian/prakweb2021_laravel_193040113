@@ -6,7 +6,7 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
-                <li class="nav-item">
+                <li class="nav-item ">
                     <a class="nav-link {{ ($title === "Home") ? 'active' : '' }} " href="/">Home</a>
                 </li>
                 <li class="nav-item">
