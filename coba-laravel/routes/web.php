@@ -1,11 +1,10 @@
 <?php
 
-use App\Http\Controllers\PostController;
-use App\Models\Post;
-use App\Providers\RouteServiceProvider;
 use Illuminate\Support\Facades\Route;
-
-use App\Models\category;
+use App\Models\Post;
+use App\Http\Controllers\PostController;
+use App\Models\Category;
+use App\Models\User;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,7 +27,7 @@ Route::get('/about', function () {
     return view('about', [
         "title" => "About",
         "name" => "Ipan Sopian",
-        "email" => "ipansopian@unpas.ac.id",
+        "nickname" => "Ifanipan3",
         "image" => "image.jpg"
     ]);
 });
@@ -36,25 +35,31 @@ Route::get('/about', function () {
 
 
 
+
+
+
 Route::get('/blog', [PostController::class, 'index']);
-Route::get('posts/{post:slug}', [PostController::class, 'show']);
+Route::get('/posts/{post:slug}', [PostController::class, 'show']);
 
-route::get('/categories', function(){
-    return view ('categories', [
-        'title' => 'post categories',
-        'categories' => category::all()
-
+Route::get('/categories', function () {
+    return view('categories', [
+        'title' => 'Post Categories',
+        'active' =>'categories'
+        'categories' => Category::all()
     ]);
 });
 
-Route::get('/categories/[category:slug}', function(category $category){
-    return view('category',[
-        'title'=> $category->name,
-        'post'=> $category->posts,
-        'category'=> $category->name
+Route::get('/categories/{category:slug}', function (Category $category) {
+    return view('posts', [
+        'title' => "Post by Category : $category->name",
+        'active' =>'categories'
+        'posts' => $category->posts->load('category', 'author')
     ]);
 });
 
-
-
-
+Route::get('/authors/{author:username}', function (User $author) {
+    return view('posts', [
+        'title' => "Post By Author : $author->name",
+        'posts' => $author->posts->load('category', 'author')
+    ]);
+});
